@@ -14,7 +14,7 @@ var connection = () => {
   );
 
   return db;
-}
+};
 
 module.exports = () => {
   return connection;
