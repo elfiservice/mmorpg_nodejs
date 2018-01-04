@@ -8,6 +8,8 @@ UsuariosDAO.prototype.inserirUsuario = function(usuario) {
     //estabelecida a conexao, agora podemos manipular os docs dentro do bd
     mongoClient.collection("usuarios", (err, collection) => {
       collection.insert(usuario);
+
+      mongoClient.close();
     });
   });
 }
