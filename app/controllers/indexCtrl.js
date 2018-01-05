@@ -14,6 +14,10 @@ module.exports.autenticar = (application, req, res) => {
     return;
   }
 
-  res.send("pode cadastrar!")
+  var connection = application.config.dbConnection;
+  var UsuariosDAO = new application.app.models.UsuariosDAO(connection);
+
+  UsuariosDAO.autenticar(dados, res);
+
 
 };
