@@ -21,12 +21,12 @@ JogoDAO.prototype.gerarParametros = function(usuario) {
   });
 }
 
-JogoDAO.prototype.iniciarJogo = function(res, usuario, casa) {
+JogoDAO.prototype.iniciarJogo = function(res, usuario, casa, comando_invalido) {
   this._connection.open((err, mongoClient) => {
     mongoClient.collection("jogo", (err, collection) => {
       collection.find({usuario: usuario}).toArray((err, result) => {
 
-        res.render("jogo", {jogo_param: result[0], img_casa: casa});
+        res.render("jogo", {jogo_param: result[0], img_casa: casa, comando_invalido: comando_invalido});
 
         mongoClient.close();
       });

@@ -4,12 +4,18 @@ module.exports.jogo = (application, req ,res) => {
     return;
   }
 
+  var comando_invalido = 'N';
+  if(req.query.comando_invalido == 'S') {
+    comando_invalido = 'S';
+  }
+
+
   var usuario = req.session.usuario;
   var casa = req.session.casa;
   var connection = application.config.dbConnection;
   var JogoDAO = new application.app.models.JogoDAO(connection);
 
-  JogoDAO.iniciarJogo(res, usuario, casa);
+  JogoDAO.iniciarJogo(res, usuario, casa, comando_invalido);
 
 };
 
@@ -25,4 +31,20 @@ module.exports.suditos = (application, req, res) => {
 
 module.exports.pergaminhos = (application, req, res) => {
   res.render('pergaminhos');
+};
+
+module.exports.ordenar_acao_sudito = (application, req, res) => {
+  var dadosForm = req.body;
+
+  req.assert('acoes', 'Selecione uma opção!').notEmpty();
+  req.assert('quantidade', 'Digite uma qunatidade!').notEmpty();
+
+  var erros = req.validationErrors();
+  if(erros) {
+    res.redirect('jogo?comando_invalido=S');
+    return;
+  }
+console.log(dadosForm);
+  res.send('tudo ok!');
+
 };

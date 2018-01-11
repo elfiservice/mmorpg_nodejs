@@ -15,4 +15,7 @@ module.exports = (application) => {
     application.app.controllers.jogoCtrl.pergaminhos(application, req, res);
   });
 
+  application.post('/ordenar_acao_sudito', (req, res) => {
+    application.app.controllers.jogoCtrl.ordenar_acao_sudito(application, req, res);
+  });
 };
