@@ -6,4 +6,13 @@ module.exports = (application) => {
   application.get('/sair', (req, res) => {
     application.app.controllers.jogoCtrl.sair(application, req, res);
   });
+
+  application.get('/suditos', (req, res) => {
+    application.app.controllers.jogoCtrl.suditos(application, req, res);
+  });
+
+  application.get('/pergaminhos', (req, res) => {
+    application.app.controllers.jogoCtrl.pergaminhos(application, req, res);
+  });
+
 };

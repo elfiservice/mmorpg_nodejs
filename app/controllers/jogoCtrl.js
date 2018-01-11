@@ -18,3 +18,11 @@ module.exports.sair = (application, req, res) => {
     res.render('index', {validacao: {}});
   });
 };
+
+module.exports.suditos = (application, req, res) => {
+  res.render('aldeoes');
+};
+
+module.exports.pergaminhos = (application, req, res) => {
+  res.render('pergaminhos');
+};
