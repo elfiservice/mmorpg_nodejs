@@ -38,6 +38,12 @@ module.exports.pergaminhos = (application, req, res) => {
     res.send("Usuario não logado!");
     return;
   }
+
+  var connection = application.config.dbConnection;
+  var JogoDAO = new application.app.models.JogoDAO(connection);
+
+  JogoDAO.getAcoes(req.session.usuario);
+
   res.render('pergaminhos');
 };
 
