@@ -46,7 +46,7 @@ module.exports.ordenar_acao_sudito = (application, req, res) => {
     res.send("Usuario não logado!");
     return;
   }
-  
+
   var dadosForm = req.body;
 
   req.assert('acoes', 'Selecione uma opção!').notEmpty();
@@ -57,7 +57,12 @@ module.exports.ordenar_acao_sudito = (application, req, res) => {
     res.redirect('jogo?comando_invalido=S');
     return;
   }
-console.log(dadosForm);
+
+  var connection = application.config.dbConnection;
+  var JogoDAO = new application.app.models.JogoDAO(connection);
+
+  dadosForm.usuario = req.session.usuario;
+  JogoDAO.execAcao(dadosForm);
   res.send('tudo ok!');
 
 };

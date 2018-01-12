@@ -34,6 +34,28 @@ JogoDAO.prototype.iniciarJogo = function(res, usuario, casa, comando_invalido) {
   });
 }
 
+JogoDAO.prototype.execAcao = function(dadosDaAcao) {
+  this._connection.open((err, mongoClient) => {
+    mongoClient.collection("acao", (err, collection) => {
+      var date = new Date();
+      var tempo = null;
+
+      switch(dadosDaAcao.acao) {
+        case 1: tempo = 1 * 60 * 60000;
+        case 2: tempo = 2 * 60 * 60000;
+        case 3: tempo = 5 * 60 * 60000;
+        case 4: tempo = 5 * 60 * 60000;
+      }
+      //date.getTime() = instante atual em milisegundos deste 1-1-1970 até o instante em q foi executado
+      // + o tempo = que é os milisegundos a mais para concluir a acao do jogo
+      dadosDaAcao.acao_termina_em = date.getTime() + tempo;
+      collection.insert(dadosDaAcao);
+
+      mongoClient.close();
+    });
+  });
+}
+
 module.exports = () => {
   return JogoDAO;
 };
