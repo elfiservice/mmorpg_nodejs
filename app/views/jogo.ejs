@@ -21,7 +21,7 @@
 				});
 
 				$('#btn_suditos').click(function() {
-					$('#msg_erro_comando_invalido').hide();
+					$('#msg').hide();
 					$.ajax({
 						url: '/suditos',
 						method: "get",
@@ -32,7 +32,7 @@
 				});
 
 				$('#btn_pergaminho').click(function() {
-					$('#msg_erro_comando_invalido').hide();
+					$('#msg').hide();
 					$.ajax({
 						url: '/pergaminhos',
 						method: "get",
@@ -59,9 +59,15 @@
 
 	    <div class="container">
 
-			<% if(comando_invalido == 'S') {%>
-				<div class="alert alert-danger" id="msg_erro_comando_invalido">
+			<% if(msg == 'ERROR') {%>
+				<div class="alert alert-danger" id="msg">
 					<strong>Operação Invalida! Verique se foi td preenchido!</strong>
+				</div>
+			<% } %>
+
+			<% if(msg == 'OK') {%>
+				<div class="alert alert-info" id="msg">
+					<strong>Ação realizada com Sucesso!</strong>
 				</div>
 			<% } %>
 
