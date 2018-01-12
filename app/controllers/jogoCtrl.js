@@ -26,14 +26,27 @@ module.exports.sair = (application, req, res) => {
 };
 
 module.exports.suditos = (application, req, res) => {
+  if(req.session.autorizado != true) {
+    res.send("Usuario não logado!");
+    return;
+  }
   res.render('aldeoes');
 };
 
 module.exports.pergaminhos = (application, req, res) => {
+  if(req.session.autorizado != true) {
+    res.send("Usuario não logado!");
+    return;
+  }
   res.render('pergaminhos');
 };
 
 module.exports.ordenar_acao_sudito = (application, req, res) => {
+  if(req.session.autorizado != true) {
+    res.send("Usuario não logado!");
+    return;
+  }
+  
   var dadosForm = req.body;
 
   req.assert('acoes', 'Selecione uma opção!').notEmpty();
