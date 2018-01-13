@@ -42,9 +42,9 @@ module.exports.pergaminhos = (application, req, res) => {
   var connection = application.config.dbConnection;
   var JogoDAO = new application.app.models.JogoDAO(connection);
 
-  JogoDAO.getAcoes(req.session.usuario);
+  JogoDAO.getAcoes(res, req.session.usuario);
 
-  res.render('pergaminhos');
+
 };
 
 module.exports.ordenar_acao_sudito = (application, req, res) => {
