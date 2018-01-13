@@ -40,11 +40,11 @@ JogoDAO.prototype.execAcao = function(dadosDaAcao) {
       var date = new Date();
       var tempo = null;
 
-      switch(dadosDaAcao.acao) {
-        case 1: tempo = 1 * 60 * 60000;
-        case 2: tempo = 2 * 60 * 60000;
-        case 3: tempo = 5 * 60 * 60000;
-        case 4: tempo = 5 * 60 * 60000;
+      switch(parseInt(dadosDaAcao.acoes)) {
+        case 1: tempo = 1 * 60 * 60000; break;
+        case 2: tempo = 2 * 60 * 60000; break;
+        case 3: tempo = 5 * 60 * 60000; break;
+        case 4: tempo = 5 * 60 * 60000; break;
       }
       //date.getTime() = instante atual em milisegundos deste 1-1-1970 até o instante em q foi executado
       // + o tempo = que é os milisegundos a mais para concluir a acao do jogo
@@ -56,11 +56,12 @@ JogoDAO.prototype.execAcao = function(dadosDaAcao) {
   });
 }
 
-JogoDAO.prototype.getAcoes = function(usuario) {
+JogoDAO.prototype.getAcoes = function(res, usuario) {
   this._connection.open((err, mongoClient) => {
     mongoClient.collection("acao", (err, collection) => {
       collection.find({usuario: usuario}).toArray((err, result) => {
-        console.log(result);
+
+        res.render('pergaminhos', {acoes: result});
 
         mongoClient.close();
       });
