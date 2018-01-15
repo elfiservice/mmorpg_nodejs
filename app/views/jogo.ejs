@@ -53,7 +53,11 @@
 					var segundos = $(this).html();
 					var segundos_atuais = parseInt(segundos) - 1;
 
-					$(this).html(segundos_atuais);
+					if(segundos_atuais < 0) {
+						window.location.href = '/jogo?msg=acao_completa';
+					} else {
+						$(this).html(segundos_atuais);
+					}
 				});
 
 				timerID = setTimeout('cronometro()', 1000);
@@ -83,6 +87,12 @@
 			<% if(msg == 'OK') {%>
 				<div class="alert alert-info" id="msg">
 					<strong>Ação realizada com Sucesso!</strong>
+				</div>
+			<% } %>
+
+			<% if(msg == 'acao_completa') {%>
+				<div class="alert alert-info" id="msg">
+					<strong>A acao foi concluida !!</strong>
 				</div>
 			<% } %>
 
