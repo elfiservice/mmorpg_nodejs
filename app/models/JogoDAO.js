@@ -50,6 +50,21 @@ JogoDAO.prototype.execAcao = function(dadosDaAcao) {
       // + o tempo = que é os milisegundos a mais para concluir a acao do jogo
       dadosDaAcao.acao_termina_em = date.getTime() + tempo;
       collection.insert(dadosDaAcao);
+    });
+
+    mongoClient.collection("jogo", (err, collection) => {
+      var moedas = null;
+      switch(parseInt(dadosDaAcao.acoes)) {
+        case 1: moedas = -2 * dadosDaAcao.quantidade; break;
+        case 2: moedas = -3 * dadosDaAcao.quantidade; break;
+        case 3: moedas = -1 * dadosDaAcao.quantidade; break;
+        case 4: moedas = -1 * dadosDaAcao.quantidade; break;
+      }
+
+      collection.update(
+        {usuario: dadosDaAcao.usuario},
+        {$inc: {moeda: moedas}}
+      );
 
       mongoClient.close();
     });
