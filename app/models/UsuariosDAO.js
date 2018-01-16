@@ -20,7 +20,6 @@ UsuariosDAO.prototype.autenticar = function(usuario, req, res) {
     //estabelecida a conexao, agora podemos manipular os docs dentro do bd
     mongoClient.collection("usuarios", (err, collection) => {
       collection.find(usuario).toArray(function(err, result) {
-
         if(result[0] != undefined) {
           //cria uma variavel de sessao de controle para usar nas paginas q usuario pode acessar
           req.session.autorizado = true;
@@ -32,7 +31,7 @@ UsuariosDAO.prototype.autenticar = function(usuario, req, res) {
         if(req.session.autorizado){
           res.redirect("jogo");
         } else {
-          res.render("index", {validacao: {}});
+          res.render("index", {validacao: {}, autenticacao: usuario.usuario});
         }
 
       });
