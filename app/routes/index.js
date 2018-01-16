@@ -6,4 +6,8 @@ module.exports = function(application){
 	application.post('/autenticar', function(req, res){
 		application.app.controllers.indexCtrl.autenticar(application, req, res);
 	});
+
+	application.get('/cadastrar', (req, res) => {
+		application.app.controllers.indexCtrl.cadastrar(application, req, res);
+	});
 }

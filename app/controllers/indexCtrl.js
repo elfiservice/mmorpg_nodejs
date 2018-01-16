@@ -21,3 +21,7 @@ module.exports.autenticar = (application, req, res) => {
 
 
 };
+
+module.exports.cadastrar = (application, req, res) => {
+  res.render('cadastro', {validacao: {}, dadosDoForm: {}});
+};
