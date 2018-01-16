@@ -18,4 +18,8 @@ module.exports = (application) => {
   application.post('/ordenar_acao_sudito', (req, res) => {
     application.app.controllers.jogoCtrl.ordenar_acao_sudito(application, req, res);
   });
+
+  application.get('/revogar_acao', (req, res) => {
+    application.app.controllers.jogoCtrl.revogar_acao(application, req, res);
+  });
 };

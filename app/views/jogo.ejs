@@ -96,6 +96,12 @@
 				</div>
 			<% } %>
 
+			<% if(msg == 'acao_revogada') {%>
+				<div class="alert alert-info" id="msg">
+					<strong>A acao foi revogada com sucesso Senhor!</strong>
+				</div>
+			<% } %>
+
 			<div class="row">
 	    		<div class="col-sm-3 casa">
 					<img src="images/casa_<%= img_casa %>.jpg" />

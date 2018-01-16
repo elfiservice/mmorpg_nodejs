@@ -1,3 +1,5 @@
+var ObjectID = require('mongodb').ObjectId;
+
 function JogoDAO (connection) {
   this._connection = connection();
 }
@@ -82,6 +84,20 @@ JogoDAO.prototype.getAcoes = function(res, usuario) {
 
         mongoClient.close();
       });
+    });
+  });
+}
+
+JogoDAO.prototype.remover_acao = function(id_acao, res) {
+  this._connection.open((err, mongoClient) => {
+    mongoClient.collection('acao', (err, collection) => {
+      collection.remove(
+        {_id: ObjectID(id_acao)}, //deve ser um OBJETO conforme esta no BD mongo
+        function(err, result) {
+          res.redirect('jogo?msg=acao_revogada');
+          mongoClient.close();
+        }
+      );
     });
   });
 }

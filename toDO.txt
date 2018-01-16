@@ -1,0 +1,2 @@
+- tratar quatidade de moedas ao tentar adicionar uma nova Acao
+- refatorar IFs de mensagens para um switch na view jogo
