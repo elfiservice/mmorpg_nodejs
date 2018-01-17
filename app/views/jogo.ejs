@@ -101,6 +101,11 @@
 					<strong>A acao foi revogada com sucesso Senhor!</strong>
 				</div>
 			<% } %>
+			<% if(msg == 'saldo_insuficiente') {%>
+				<div class="alert alert-info" id="msg">
+					<strong>Senhor voce nao tem Saldo Suficiente para executar esta Acao!</strong>
+				</div>
+			<% } %>
 
 			<div class="row">
 	    		<div class="col-sm-3 casa">

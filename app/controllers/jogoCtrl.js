@@ -15,7 +15,7 @@ module.exports.jogo = (application, req ,res) => {
   var connection = application.config.dbConnection;
   var JogoDAO = new application.app.models.JogoDAO(connection);
 
-  JogoDAO.iniciarJogo(res, usuario, casa, msg);
+  JogoDAO.iniciarJogo(req, res, usuario, casa, msg);
 
 };
 
@@ -68,9 +68,7 @@ module.exports.ordenar_acao_sudito = (application, req, res) => {
   var JogoDAO = new application.app.models.JogoDAO(connection);
 
   dadosForm.usuario = req.session.usuario;
-  JogoDAO.execAcao(dadosForm);
-
-  res.redirect('jogo?msg=OK');
+  JogoDAO.execAcao(dadosForm, req, res);
 
 };
 

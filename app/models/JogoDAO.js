@@ -23,11 +23,11 @@ JogoDAO.prototype.gerarParametros = function(usuario) {
   });
 }
 
-JogoDAO.prototype.iniciarJogo = function(res, usuario, casa, msg) {
+JogoDAO.prototype.iniciarJogo = function(req, res, usuario, casa, msg) {
   this._connection.open((err, mongoClient) => {
     mongoClient.collection("jogo", (err, collection) => {
       collection.find({usuario: usuario}).toArray((err, result) => {
-
+        req.session.moedas = result[0].moeda;
         res.render("jogo", {jogo_param: result[0], img_casa: casa, msg: msg});
 
         mongoClient.close();
@@ -36,7 +36,7 @@ JogoDAO.prototype.iniciarJogo = function(res, usuario, casa, msg) {
   });
 }
 
-JogoDAO.prototype.execAcao = function(dadosDaAcao) {
+JogoDAO.prototype.execAcao = function(dadosDaAcao, req, res) {
   this._connection.open((err, mongoClient) => {
     mongoClient.collection("acao", (err, collection) => {
       var date = new Date();
@@ -63,10 +63,17 @@ JogoDAO.prototype.execAcao = function(dadosDaAcao) {
         case 4: moedas = -1 * dadosDaAcao.quantidade; break;
       }
 
-      collection.update(
-        {usuario: dadosDaAcao.usuario},
-        {$inc: {moeda: moedas}}
-      );
+      var saldo_de_moedas = req.session.moedas + moedas;
+
+      if(saldo_de_moedas < 0) {
+        res.redirect('jogo?msg=saldo_insuficiente');
+      } else {
+        collection.update(
+          {usuario: dadosDaAcao.usuario},
+          {$inc: {moeda: moedas}}
+        );
+        res.redirect('jogo?msg=OK');
+      }
 
       mongoClient.close();
     });
