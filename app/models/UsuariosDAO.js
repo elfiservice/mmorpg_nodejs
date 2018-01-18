@@ -1,3 +1,5 @@
+var crypto = require('crypto');
+
 function UsuariosDAO(connection) {
   this._connection = connection();
 }
@@ -7,6 +9,10 @@ UsuariosDAO.prototype.inserirUsuario = function(usuario) {
   this._connection.open( (err, mongoClient) => {
     //estabelecida a conexao, agora podemos manipular os docs dentro do bd
     mongoClient.collection("usuarios", (err, collection) => {
+
+      var senha_criptografada = crypto.createHash('md5').update(usuario.senha).digest("hex");
+      usuario.senha = senha_criptografada;
+
       collection.insert(usuario);
 
       mongoClient.close();
@@ -19,6 +25,10 @@ UsuariosDAO.prototype.autenticar = function(usuario, req, res) {
   this._connection.open( (err, mongoClient) => {
     //estabelecida a conexao, agora podemos manipular os docs dentro do bd
     mongoClient.collection("usuarios", (err, collection) => {
+
+      var senha_criptografada = crypto.createHash('md5').update(usuario.senha).digest("hex");
+      usuario.senha = senha_criptografada;
+      
       collection.find(usuario).toArray(function(err, result) {
         if(result[0] != undefined) {
           //cria uma variavel de sessao de controle para usar nas paginas q usuario pode acessar
